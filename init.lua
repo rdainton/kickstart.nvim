@@ -18,7 +18,6 @@
 ========      '""""""""""""'  '""""""""""""'  '""""""""""'   ========
 ========                                                     ========
 =====================================================================
-=====================================================================
 
 What is Kickstart?
 
@@ -98,14 +97,11 @@ vim.g.netrw_liststyle = 0
 
 -- [[ Setting options ]]
 -- See `:help vim.opt`
--- NOTE: You can change these options as you wish!
 --  For more options, you can see `:help option-list`
 
--- Make line numbers default
 vim.opt.number = true
--- You can also add relative line numbers, to help with jumping.
---  Experiment for yourself to see if you like it!
 vim.opt.relativenumber = true
+vim.opt.linespace = 6
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = 'a'
@@ -167,9 +163,6 @@ vim.opt.fillchars:append { diff = '╱' }
 vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
--- Set jj as exit insert mode.
-vim.keymap.set('i', 'jj', '<Esc>', { desc = 'Exit insert mode' })
-
 -- Diagnostic keymaps
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
@@ -185,10 +178,26 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
 -- TIP: Disable arrow keys in normal mode
--- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
--- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
--- vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
--- vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
+vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
+vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
+vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
+vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
+
+-- Enable common Cmd shortcuts for Mac
+vim.keymap.set('n', '<D-z>', '<cmd>undo<CR>', { desc = 'Undo' })
+vim.keymap.set('i', '<D-z>', '<C-o><cmd>undo<CR>', { desc = 'Undo' })
+vim.keymap.set('n', '<D-S-z>', '<cmd>redo<CR>', { desc = 'Redo' })
+vim.keymap.set('i', '<D-S-z>', '<C-o><cmd>redo<CR>', { desc = 'Redo' })
+
+vim.keymap.set({ 'n', 'v' }, '<D-c>', '"+y', { desc = 'Copy' })
+vim.keymap.set('n', '<D-v>', '"+p', { desc = 'Paste' })
+vim.keymap.set('i', '<D-v>', '<C-r>+', { desc = 'Paste' })
+
+vim.keymap.set('n', '<D-a>', 'ggVG', { desc = 'Select all' })
+vim.keymap.set('i', '<D-a>', '<C-o>ggVG', { desc = 'Select all' })
+
+vim.keymap.set('n', '<D-s>', '<cmd>w<CR>', { desc = 'Save' })
+vim.keymap.set('i', '<D-s>', '<C-o><cmd>w<CR>', { desc = 'Save' })
 
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
@@ -563,11 +572,11 @@ require('lazy').setup({
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        -- clangd = {},
+        clangd = {},
         gopls = {},
         -- pyright = {},
         rust_analyzer = {},
-        intelephense = {},
+        -- intelephense = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
         -- Some languages (like typescript) have entire language plugins that can be useful:
@@ -575,19 +584,11 @@ require('lazy').setup({
         --
         -- But for many setups, the LSP (`tsserver`) will work just fine
         tsserver = {
-          init_options = {
-            plugins = {
-              {
-                name = '@vue/typescript-plugin',
-                location = string.gsub(vim.fn.system 'npm root -g', '^%s*(.-)%s*$', '%1') .. '/@vue/typescript-plugin',
-                languages = { 'javascript', 'typescript', 'vue' },
-              },
-            },
-          },
+          init_options = {},
           filetypes = {
             'javascript',
             'typescript',
-            'vue',
+            -- 'vue',
           },
         },
         volar = {},
@@ -646,7 +647,7 @@ require('lazy').setup({
         -- Disable "format_on_save lsp_fallback" for languages that don't
         -- have a well standardized coding style. You can add additional
         -- languages here or re-enable it for the disabled ones.
-        local disable_filetypes = { c = true, cpp = true }
+        local disable_filetypes = { c = false, cpp = true }
         return {
           timeout_ms = 500,
           lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
@@ -733,7 +734,7 @@ require('lazy').setup({
           -- Accept ([y]es) the completion.
           --  This will auto-import if your LSP supports it.
           --  This will expand snippets if the LSP sent a snippet.
-          ['<C-y>'] = cmp.mapping.confirm { select = true },
+          ['<Tab>'] = cmp.mapping.confirm { select = true },
 
           -- Manually trigger a completion from nvim-cmp.
           --  Generally you don't need this, because nvim-cmp will display
@@ -783,7 +784,7 @@ require('lazy').setup({
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'lw-rubber'
+      -- vim.cmd.colorscheme 'lw-rubber' -- Commented out to use local colorscheme
 
       -- You can configure highlights by doing something like:
       vim.cmd.hi 'Comment gui=none'
@@ -834,7 +835,7 @@ require('lazy').setup({
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
     opts = {
-      ensure_installed = { 'bash', 'c', 'html', 'lua', 'markdown', 'vim', 'vimdoc' },
+      ensure_installed = { 'bash', 'c', 'html', 'lua', 'markdown', 'vim', 'vimdoc', 'javascript', 'typescript' },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {
