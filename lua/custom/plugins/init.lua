@@ -10,5 +10,15 @@ return {
     config = function()
       vim.cmd.colorscheme 'fiftyshades'
     end,
-  }
+  },
+  {
+    'numToStr/Comment.nvim',
+    config = function()
+      require('Comment').setup()
+
+      -- Keybindings
+      vim.keymap.set('v', '<D-/>', '<Plug>(comment_toggle_linewise_visual)', { desc = 'Comment toggle linewise (visual)' })
+      vim.keymap.set('n', '<D-/>', '<Plug>(comment_toggle_linewise_current)', { desc = 'Comment toggle current line' })
+    end,
+  },
 }
