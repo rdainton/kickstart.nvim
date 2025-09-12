@@ -21,4 +21,7 @@ return {
       vim.keymap.set('n', '<D-/>', '<Plug>(comment_toggle_linewise_current)', { desc = 'Comment toggle current line' })
     end,
   },
+  {
+    'smithbm2316/centerpad.nvim',
+  },
 }
