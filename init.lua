@@ -67,6 +67,17 @@ vim.opt.scrolloff = 999
 -- Fill with '/' rather than ''
 vim.opt.fillchars:append { diff = '╱' }
 
+-- C/C++ specific settings for 2-space indentation
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { 'c', 'cpp' },
+  callback = function()
+    vim.opt_local.shiftwidth = 2
+    vim.opt_local.tabstop = 2
+    vim.opt_local.expandtab = true
+    vim.opt_local.softtabstop = 2
+  end,
+})
+
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
@@ -109,6 +120,8 @@ vim.keymap.set('i', '<D-a>', '<C-o>ggVG', { desc = 'Select all' })
 
 vim.keymap.set('n', '<D-s>', '<cmd>w<CR>', { desc = 'Save' })
 vim.keymap.set('i', '<D-s>', '<C-o><cmd>w<CR>', { desc = 'Save' })
+
+vim.keymap.set('n', '<leader>e', ':Explore<CR>', { desc = 'Open file explorer' })
 
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
