@@ -4,11 +4,9 @@
 -- See the kickstart.nvim README for more information
 return {
   {
-    dir = '~/Apps/fiftyshades',
-    name = 'fiftyshades',
-    priority = 1000,
+    'rdainton/fiftyshades',
     config = function()
-      vim.cmd.colorscheme 'fiftyshades'
+      require('fiftyshades').setup {}
     end,
   },
   {
