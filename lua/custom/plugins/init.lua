@@ -17,6 +17,7 @@ return {
       -- Keybindings
       vim.keymap.set('v', '<D-/>', '<Plug>(comment_toggle_linewise_visual)', { desc = 'Comment toggle linewise (visual)' })
       vim.keymap.set('n', '<D-/>', '<Plug>(comment_toggle_linewise_current)', { desc = 'Comment toggle current line' })
+      vim.keymap.set('i', '<D-/>', '<C-o><Plug>(comment_toggle_linewise_current)', { desc = 'Comment toggle current line (insert)' })
     end,
   },
   {
