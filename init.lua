@@ -78,7 +78,6 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
-
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
@@ -122,7 +121,7 @@ vim.keymap.set('i', '<D-a>', '<C-o>ggVG', { desc = 'Select all' })
 vim.keymap.set('n', '<D-s>', '<cmd>w<CR>', { desc = 'Save' })
 vim.keymap.set('i', '<D-s>', '<C-o><cmd>w<CR>', { desc = 'Save' })
 
-vim.keymap.set('n', '<leader>e', ':Explore<CR>', { desc = 'Open file explorer' })
+vim.keymap.set('n', '<leader>b', ':Explore<CR>', { desc = 'Open file explorer' })
 
 -- Toggle centering buffer
 vim.keymap.set('n', '<leader>z', '<cmd>Centerpad 20<cr>', { desc = 'Toggle centered view' })
