@@ -1,8 +1,15 @@
--- You can add your own plugins here or in other files in this directory!
---  I promise not to create any merge conflicts in this directory :)
---
--- See the kickstart.nvim README for more information
 return {
+  {
+    'rdainton/share-context.nvim',
+    config = function()
+      local share_context = require 'share-context'
+
+      -- Keybindings
+      vim.keymap.set({ 'n', 'i', 'v' }, '<leader>cr', share_context.copy_context_relative, { desc = 'Copies [C]ontext [R]elative to CWD' })
+      vim.keymap.set({ 'n', 'i', 'v' }, '<leader>cg', share_context.copy_context_git_relative, { desc = 'Copies [C]ontext relative to [G]it root' })
+      vim.keymap.set({ 'n', 'i', 'v' }, '<leader>ca', share_context.copy_context_absolute, { desc = 'Copies [C]ontext with [A]bsolute path' })
+    end,
+  },
   {
     'rdainton/fiftyshades',
     priority = 1000, -- Make sure to load this before all the other start plugins.
