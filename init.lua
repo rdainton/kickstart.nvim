@@ -12,6 +12,7 @@ vim.g.netrw_liststyle = 0
 
 vim.opt.number = true
 vim.opt.relativenumber = true
+vim.opt.statuscolumn = '%s%=%{v:relnum?v:relnum:v:lnum}    '
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = 'a'
